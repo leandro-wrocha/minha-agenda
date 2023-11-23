@@ -2,7 +2,7 @@
 
 import { Box, Button, Center, Flex, Text } from "@chakra-ui/react";
 
-export default function Home() {
+export default function Page() {
 
   return (
     <Box className="h-full">
