@@ -1,5 +1,8 @@
+import { Poppins } from 'next/font/google'
+
 import './globals.css'
-import { SessionProvider } from 'next-auth/react'
+
+const poppins = Poppins({ weight: ['300', '400', '500', '600', '700'], style: ['italic', 'normal'], subsets: ['latin'] })
 
 export default function RootLayout({
   children,
@@ -8,10 +11,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+      <body className={poppins.className}>
+        {children}
       </body>
     </html>
   )
