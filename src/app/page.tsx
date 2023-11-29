@@ -1,8 +1,22 @@
-import { MapPin, CalendarDays, StickyNote, Circle } from 'lucide-react'
+'use client'
+
+import { MapPin, CalendarDays, StickyNote, Circle, ChevronUp } from 'lucide-react'
 
 export default function Page() {
   return (
     <div id="container" className="h-full bg-bglp px-4 lg:px-[135px]">
+      <button
+        className="w-10 h-10 flex items-center justify-center rounded-full bg-primary hover:bg-btn-hover sm:sr-only fixed bottom-10 right-4 z-20"
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }}
+      >
+        <ChevronUp className="w-10 h-10 text-white"/>
+      </button>
+
       <div className="max-w-[1170px] w-full flex justify-between pt-6">
         <img className="cursor-pointer w-36 sm:w-auto" src="/logo.svg" alt="logo-minha-agenda" />
 
