@@ -16,7 +16,8 @@ const config: Config = {
         "primary": "#26323E",
         "secondary": "#B7B7B7",
         "green1": "#68BA00",
-        "textprimary": "#72CC00"
+        "textprimary": "#72CC00",
+        "btn-hover": "#56B000"
       }
     },
   },
