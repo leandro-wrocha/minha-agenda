@@ -1,3 +1,5 @@
+'use client'
+
 import { addHours, eachHourOfInterval, format } from 'date-fns'
 
 import 'react-datepicker/dist/react-datepicker.css'
