@@ -32,7 +32,8 @@ export default function Page() {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      registerUser()
+      // registerUser()
+      router.push('/dashboard')
     }
   }, [status])
 
