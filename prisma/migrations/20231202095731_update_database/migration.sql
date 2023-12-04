@@ -3,7 +3,6 @@ CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "access_token" TEXT NOT NULL,
     "refresh_token" TEXT NOT NULL,
     "register_steps" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

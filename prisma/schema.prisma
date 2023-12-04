@@ -14,7 +14,6 @@ model User {
   id             String     @id @default(uuid())
   name           String
   email          String     @unique
-  access_token   String
   refresh_token  String
   register_steps Int
   created_at     DateTime   @default(now())
@@ -47,6 +46,7 @@ model Service {
   name        String
   description String?
   price       Int
+  time        Int
   user_id     String
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt()
