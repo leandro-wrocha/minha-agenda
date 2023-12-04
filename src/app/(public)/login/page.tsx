@@ -16,7 +16,6 @@ export default function Page() {
         data: {
           name: data?.user?.name,
           email: data?.user?.email,
-          access_token: data?.access_token,
           refresh_token: data?.refresh_token,
           register_steps: 0
         }
@@ -33,6 +32,7 @@ export default function Page() {
   useEffect(() => {
     if (status === 'authenticated') {
       registerUser()
+      // router.push('/dashboard')
     }
   }, [status])
 

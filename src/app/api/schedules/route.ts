@@ -35,6 +35,15 @@ export async function POST(request: NextRequest) {
       })
     })
 
+    await prisma.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        register_steps: 1
+      }
+    })
+
     return NextResponse.json({}, { status: 201 })
   } catch (error) {
     return NextResponse.json({}, { status: 500 })

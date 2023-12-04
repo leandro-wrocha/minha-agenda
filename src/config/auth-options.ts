@@ -7,15 +7,12 @@ const clientSecret = process.env.GOOGLE_CLIENT_SECRET ?? ''
 
 const scopes = [
   'https://www.googleapis.com/auth/calendar',
-  'https://www.googleapis.com/auth/calendar.calendarlist',
-  'https://www.googleapis.com/auth/calendar.events',
-  'https://www.googleapis.com/auth/calendar.events.owned',
   'openid',
   'email',
   'profile'
 ]
 
-export const authOptions: AuthOptions =  {
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId,
@@ -42,7 +39,7 @@ export const authOptions: AuthOptions =  {
 
       return token
     },
-    session: async ({ session, token}) => {
+    session: async ({ session, token }) => {
       const tokenAny: any = token
       session.access_token = tokenAny.access_token
       session.refresh_token = tokenAny.refreh_token
