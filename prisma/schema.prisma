@@ -11,16 +11,18 @@ datasource db {
 }
 
 model User {
-  id             String     @id @default(uuid())
+  id             String        @id @default(uuid())
   name           String
-  email          String     @unique
+  email          String        @unique
   refresh_token  String
   register_steps Int
-  created_at     DateTime   @default(now())
-  updated_at     DateTime   @updatedAt()
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt()
   deleted_at     DateTime?
   Schedule       Schedule[]
   Service        Service[]
+  Calendar       Calendar[]
+  Appointment    Appointment[]
 
   @@index([id, email])
   @@map("users")
@@ -42,17 +44,50 @@ model Schedule {
 }
 
 model Service {
-  id          String    @id @default(uuid())
+  id          String        @id @default(uuid())
   name        String
   description String?
   price       Int
   time        Int
   user_id     String
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt()
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt()
   deleted_at  DateTime?
-  user        User      @relation(fields: [user_id], references: [id])
+  user        User          @relation(fields: [user_id], references: [id])
+  Appointment Appointment[]
 
   @@index([id, user_id])
   @@map("services")
+}
+
+model Calendar {
+  id          String        @id @default(uuid())
+  identifier  String        @unique
+  user_id     String
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String
+  Appointment Appointment[]
+
+  @@index([id, user_id, identifier])
+  @@map("calendars")
+}
+
+model Appointment {
+  id            String   @id @default(uuid())
+  date          DateTime
+  hour_start    DateTime
+  hour_end      DateTime
+  user_extgmail String
+  user_id       String
+  calendar_id   String
+  service_id    String
+  user          User     @relation(fields: [userId], references: [id])
+  calendar      Calendar @relation(fields: [calendarId], references: [id])
+  service       Service  @relation(fields: [serviceId], references: [id])
+  userId        String
+  calendarId    String
+  serviceId     String
+
+  @@index([id, calendar_id, user_id, service_id])
+  @@map("appointments")
 }
