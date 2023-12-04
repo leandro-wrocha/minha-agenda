@@ -1,8 +1,12 @@
 'use client'
 
+<<<<<<< HEAD
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { useEffect } from "react"
+=======
+import { useSession } from "next-auth/react"
+>>>>>>> a936d0d0fd58407e9eb75f73f4e8d33844d99d12
 
 export default function Page() {
   const { data } = useSession()
