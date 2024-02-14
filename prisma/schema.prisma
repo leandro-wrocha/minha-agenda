@@ -10,34 +10,82 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TypeLog {
+  register
+}
+
 model User {
-  id            String   @id @default(uuid())
-  name          String
-  email         String   @unique
-  refresh_token String
-  access_token  String
-  expires_at    Int
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  id                      String           @id @default(uuid())
+  name                    String?
+  email                   String           @unique
+  refresh_token           String
+  access_token            String
+  access_token_expires_at Int
+  created_at              DateTime         @default(now())
+  updated_at              DateTime         @updatedAt
+  Schedules               Schedules[]
+  Service                 Service[]
+  TimesScheduled          TimesScheduled[]
+  Logs                    Logs[]
 
   @@map("users")
 }
 
-model Schedule {
+model Schedules {
   id         String   @id @default(uuid())
   day        String
   hour_start String
   hour_end   String
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt()
+  user_id    String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+
+  @@map("schedules")
 }
 
 model Service {
-  id                          String   @id @default(uuid())
-  name                        String
-  time_executation_in_minutes Int
-  created_at                  DateTime @default(now())
-  updated_at                  DateTime @updatedAt
+  id                      String           @id @default(uuid())
+  name                    String
+  service_time_in_seconds Int
+  created_at              DateTime         @default(now())
+  updated_at              DateTime         @updatedAt
+  user_id                 String
+  user                    User             @relation(fields: [userId], references: [id])
+  userId                  String
+  TimesScheduled          TimesScheduled[]
 
   @@map("services")
+}
+
+model TimesScheduled {
+  id          String   @id @default(uuid())
+  appointment DateTime
+  name        String?
+  email       String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt()
+  user_id     String
+  service_id  String
+  user        User     @relation(fields: [userId], references: [id])
+  service     Service  @relation(fields: [serviceId], references: [id])
+  userId      String
+  serviceId   String
+
+  @@index([email, user_id, service_id])
+  @@map("times_scheduled")
+}
+
+model Logs {
+  id         String   @id @default(uuid())
+  type       TypeLog
+  action     String
+  created_at DateTime @default(now())
+  user_id    String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+
+  @@index([type])
+  @@map("logs")
 }
