@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
-import SessionProvider from "./providers/session-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ['400', '500', '600', '700'],
+  style: ['italic', 'normal'],
+  subsets: ['latin']
+});
 
 export const metadata: Metadata = {
-  title: "",
-  description: "",
+  title: "Minha Agenda",
+  icons: "/calendar.svg",
 };
 
 export default function RootLayout({
@@ -17,10 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+      <body className={poppins.className}>
+        {children}
       </body>
     </html>
   );
