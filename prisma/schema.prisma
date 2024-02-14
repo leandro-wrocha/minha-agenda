@@ -22,3 +22,22 @@ model User {
 
   @@map("users")
 }
+
+model Schedule {
+  id         String   @id @default(uuid())
+  day        String
+  hour_start String
+  hour_end   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Service {
+  id                          String   @id @default(uuid())
+  name                        String
+  time_executation_in_minutes Int
+  created_at                  DateTime @default(now())
+  updated_at                  DateTime @updatedAt
+
+  @@map("services")
+}
