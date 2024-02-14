@@ -3,10 +3,10 @@ version: '3.9'
 services:
   database:
     image: postgres:15.5-alpine
-    container_name: 'postgres-development'
+    container_name: 'minha-agenda-db'
     ports:
       - '5432:5432'
     environment:
-      - POSTGRES_DB=minhagenda-development
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=minha-agenda
+      - POSTGRES_USER=minha-agenda
+      - POSTGRES_PASSWORD=minha-agenda
