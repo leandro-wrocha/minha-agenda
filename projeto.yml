@@ -47,9 +47,12 @@ funcao verificarpassoqueusuarioparou(email) {
   }
 }
 
+
+# não seria uma boa opção realizar a abertura de uma janela para executar o login do usuário
+# pois a aplicação é mais focada em mobile, e isso iria gerar alguns problemas
 funcao registrarusuario() {
   primeira acao:
-    carregar modal de login do goole:
+    login com conta google:
       se (conta do google estiver correta) {
         capturar os dados de {
           access_token,

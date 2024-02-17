@@ -7,7 +7,7 @@ type User = {
   email: string,
   refresh_token: string,
   access_token: string,
-  expires_at: number,
+  access_token_expires_at: number,
 }
 
 const clientId = process.env.CLIENT_ID ?? ''
@@ -40,7 +40,7 @@ const options: NextAuthOptions = {
           email: user.email ?? '',
           refresh_token: account?.refresh_token ?? '',
           access_token: account?.access_token ?? '',
-          expires_at: account?.expires_at ?? 0
+          access_token_expires_at: account?.expires_at ?? 0
         }
 
         const exists = await prisma.user.findUnique({
