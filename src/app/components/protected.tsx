@@ -30,12 +30,7 @@ export const Protected = () => {
 
   return (
       <main className="h-screen" >
-        { session.status === 'authenticated' ? 
-            registerStep == 1 ? 
-              redirect('/register/step/one')
-              : registerStep == 2 ? redirect('register/step/two')
-              : registerStep == 3 && redirect('/new-dashboard')
-          : <Home />
+        { session.status === 'authenticated' ? redirect('register') : <Home />
         }
       </main>
   )
