@@ -12,11 +12,13 @@ const hours = eachMinuteOfInterval({
 }, { step: 30 }).map(item => format(item, "HH:mm"));
 
 interface IService {
+  id: number;
   name: string;
   timeInSeconds: number;
 }
 
 const defaultService: IService = {
+  id: 0,
   name: "",
   timeInSeconds: 900
 }
@@ -49,8 +51,8 @@ export default function Page() {
   }
 
   const handleServiceName = (name: string, position: number) => {
-    let servicesTemp = services.map((service, index) => {
-      if (index === position) {
+    let servicesTemp = services.map((service) => {
+      if (service.id === position) {
         return { ...service, name };
       }
 
@@ -61,8 +63,8 @@ export default function Page() {
   }
 
   const handleServiceTimeInSeconds = (seconds: number, position: number) => {
-    let servicesTemp = services.map((service, index) => {
-      if (index === position) {
+    let servicesTemp = services.map((service) => {
+      if (service.id === position) {
         return { ...service, timeInSeconds: seconds }
       }
 
@@ -74,13 +76,16 @@ export default function Page() {
 
   const handleAddServices = () => {
     let servicesTemp = services.slice();
-    servicesTemp = [...servicesTemp, defaultService];
+    servicesTemp = [...servicesTemp, {
+      ...defaultService,
+      id: servicesTemp.length + 1
+    }];
 
     setServices(servicesTemp);
   }
-  const handleRemoveServices = (indexToRemove: number) => {
+  const handleRemoveServices = (position: number) => {
     let servicesTemp = services.slice();
-    servicesTemp = servicesTemp.filter((item, index) => index != indexToRemove);
+    servicesTemp = servicesTemp.filter((item) => item.id != position);
 
     setServices(servicesTemp);
   }
@@ -134,7 +139,7 @@ export default function Page() {
           <div>
             <ul className="flex flex-col items-center">
               {services.map((item, index) => (
-                <li className="flex gap-2" key={index}>
+                <li className="flex gap-2" key={item.id}>
                   <input
                     type="text"
                     name="name"
@@ -142,12 +147,12 @@ export default function Page() {
                     className="border item.namborder-[#333] rounded-sm max-w-[200px] h-8 pl-2"
                     placeholder="nome do serviço"
                     value={item.name}
-                    onChange={(event) => handleServiceName(event.currentTarget.value, index)}
+                    onChange={(event) => handleServiceName(event.currentTarget.value, item.id)}
                   />
                   <select 
                     className="h-8"
                     defaultValue={item.timeInSeconds}
-                    onChange={(event) => handleServiceTimeInSeconds(Number(event.currentTarget.value), index)}
+                    onChange={(event) => handleServiceTimeInSeconds(Number(event.currentTarget.value), item.id)}
                     name="timeinseconds"
                     id="timeinseconds"
                   >
@@ -173,7 +178,7 @@ export default function Page() {
                     <button
                       type="button"
                       className="font-bold text-lg ml-4"
-                      onClick={() => handleRemoveServices(index)}
+                      onClick={() => handleRemoveServices(item.id)}
                     >
                       x
                     </button>
