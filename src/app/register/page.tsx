@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { translate } from "../helpers/translate"
 import { addHours, eachMinuteOfInterval, format } from "date-fns";
-
+import axios from "axios";
+import { redirect } from "next/navigation";
 // constante
 const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 const hours = eachMinuteOfInterval({
@@ -78,7 +79,7 @@ export default function Page() {
     let servicesTemp = services.slice();
     servicesTemp = [...servicesTemp, {
       ...defaultService,
-      id: servicesTemp.length + 1
+      id: servicesTemp[servicesTemp.length - 1].id + 1
     }];
 
     setServices(servicesTemp);
@@ -88,6 +89,23 @@ export default function Page() {
     servicesTemp = servicesTemp.filter((item) => item.id != position);
 
     setServices(servicesTemp);
+  }
+
+  const handleSubmit = async () => {
+    redirect('/dashboard');
+
+    return
+    const response = await axios.post('/api/schedules', {
+      "days": daysSelect,
+      "hourStart": hourStart,
+      "hourEnd": hourEnd,
+      "userId": "e4540050-a998-4745-a01d-a41b24f85754"
+    });
+
+    const responseServices = await axios.post('/api/services', {
+      services,
+      "userId": "e4540050-a998-4745-a01d-a41b24f85754"
+    });
   }
 
   return (
@@ -166,15 +184,15 @@ export default function Page() {
                     <option value={12600}>3h 30 min</option>
                   </select>
 
-                  <button
-                    type="button"
-                    className="font-bold text-lg ml-4"
-                    onClick={() => handleAddServices()}
-                  >
-                    +
-                  </button>
-
-                  {services.length > 1 && (
+                  {services.length - 1 === index ? (
+                    <button
+                      type="button"
+                      className="font-bold text-lg ml-4"
+                      onClick={() => handleAddServices()}
+                    >
+                      +
+                    </button>
+                  ) : services.length > 1 && services.length - 1 !== index && (
                     <button
                       type="button"
                       className="font-bold text-lg ml-4"
@@ -187,6 +205,15 @@ export default function Page() {
               ))}
             </ul>
           </div>
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <button
+            className="p-2 rounded bg-[#4BB05B] font-bold text-[#eee]"
+            onClick={() => handleSubmit()}
+          >
+            Finalizar registro
+          </button>
         </div>
       </div>
     </div>
