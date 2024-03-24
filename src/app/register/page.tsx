@@ -86,7 +86,8 @@ export default function Page() {
   }
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-screen flex flex-col items-center">
+      <img src="/logo.svg" alt="logo" className="mt-4 mb-6"/>
       <div className="max-w-[700px]">
         <ul className="flex gap-3">
           {days.map(day => (
