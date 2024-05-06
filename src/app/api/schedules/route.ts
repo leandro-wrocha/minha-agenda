@@ -1,5 +1,5 @@
 import prisma from "@/app/prisma";
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 
 interface IScheduleStore {
   days: string[];
@@ -10,12 +10,17 @@ interface IScheduleStore {
 
 export const POST = async (request: NextRequest) => {
   const body = await request.json();
-  
+
   try {
-    const hoursCreated = await prisma.schedules.findMany({ where: { userId: body.userId } });
+    const hoursCreated = await prisma.schedules.findMany({
+      where: { user_id: body.userId },
+    });
 
     if (hoursCreated.length > 0) {
-      return NextResponse.json({ message: 'Horários já criados.' }, { status: 200 });
+      return NextResponse.json(
+        { message: "Horários já criados." },
+        { status: 200 },
+      );
     }
 
     const data: any = body.days.map((day: string) => {
@@ -24,17 +29,15 @@ export const POST = async (request: NextRequest) => {
         hour_start: body.hourStart,
         hour_end: body.hourEnd,
         user_id: body.userId,
-        userId: body.userId
+      };
+    });
 
-      }
-    })
+    await prisma.schedules.createMany({ data });
 
-    await prisma.schedules.createMany({data});
-
-    return NextResponse.json({ message: 'Horários Criados'}, { status: 201 });
+    return NextResponse.json({ message: "Horários Criados" }, { status: 201 });
   } catch (error) {
-    console.log(error)
+    console.log(error);
 
     return NextResponse.json({ message: error }, { status: 400 });
   }
-}
+};

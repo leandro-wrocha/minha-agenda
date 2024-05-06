@@ -1,38 +1,38 @@
 export function translate(word: string) {
   switch (word) {
     case "mon": {
-      word = "Segunda"
+      word = "Segunda";
       break;
     }
     case "tue": {
-      word = "Terça"
+      word = "Terça";
       break;
     }
     case "wed": {
-      word = "Quarta"
+      word = "Quarta";
       break;
     }
     case "thu": {
-      word = "Quinta"
+      word = "Quinta";
       break;
     }
     case "fri": {
-      word = "Sexta"
+      word = "Sexta";
       break;
     }
     case "sat": {
-      word = "Sabádo"
+      word = "Sabádo";
       break;
     }
     case "sun": {
-      word = "Domingo"
+      word = "Domingo";
       break;
     }
     default: {
-      word = "errorTranslate"
+      word = "errorTranslate";
       break;
     }
   }
-  
+
   return word;
 }
